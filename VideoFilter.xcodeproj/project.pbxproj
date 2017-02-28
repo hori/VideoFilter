@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B33748E81D002FC25C8BEEE /* Pods_VideoFilterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506AEBA1C1950E156359AF71 /* Pods_VideoFilterTests.framework */; };
+		6D0FEF19EDFC9C1380377F3F /* Pods_VideoFilterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D857235DA3970C584C2185AD /* Pods_VideoFilterUITests.framework */; };
 		82AB28B01E5EE9740028F528 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AB28AF1E5EE9740028F528 /* AppDelegate.swift */; };
 		82AB28B21E5EE9740028F528 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AB28B11E5EE9740028F528 /* ViewController.swift */; };
 		82AB28B51E5EE9740028F528 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82AB28B31E5EE9740028F528 /* Main.storyboard */; };
@@ -14,6 +16,13 @@
 		82AB28BA1E5EE9740028F528 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82AB28B81E5EE9740028F528 /* LaunchScreen.storyboard */; };
 		82AB28C51E5EE9740028F528 /* VideoFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AB28C41E5EE9740028F528 /* VideoFilterTests.swift */; };
 		82AB28D01E5EE9740028F528 /* VideoFilterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AB28CF1E5EE9740028F528 /* VideoFilterUITests.swift */; };
+		82AB28DF1E5F07A30028F528 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AB28DE1E5F07A30028F528 /* PlayerView.swift */; };
+		82AB28E01E5FCE860028F528 /* snowboarding_480p.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 82AB28DD1E5EF7F20028F528 /* snowboarding_480p.m4v */; };
+		82AB28E91E6400F70028F528 /* dynamic.acv in Resources */ = {isa = PBXBuildFile; fileRef = 82AB28E81E6400EE0028F528 /* dynamic.acv */; };
+		82F976D21E643107008163E1 /* DynamicFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F976D11E643107008163E1 /* DynamicFilter.swift */; };
+		82F976D41E6564F6008163E1 /* tone.acv in Resources */ = {isa = PBXBuildFile; fileRef = 82F976D31E6564E6008163E1 /* tone.acv */; };
+		82F976D61E656B4F008163E1 /* default.acv in Resources */ = {isa = PBXBuildFile; fileRef = 82F976D51E6568F5008163E1 /* default.acv */; };
+		A48E1C40FD60C75685DEDDA3 /* Pods_VideoFilter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1426FD3BC87D8451B798185 /* Pods_VideoFilter.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +43,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		18C4E19FD8E199C8F1CBCE7A /* Pods-VideoFilterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoFilterUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VideoFilterUITests/Pods-VideoFilterUITests.release.xcconfig"; sourceTree = "<group>"; };
+		506AEBA1C1950E156359AF71 /* Pods_VideoFilterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoFilterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7298F1D3CD4DB876FE01AC94 /* Pods-VideoFilter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoFilter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VideoFilter/Pods-VideoFilter.debug.xcconfig"; sourceTree = "<group>"; };
+		76C826ADA81B458D6FE0A024 /* Pods-VideoFilterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoFilterTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VideoFilterTests/Pods-VideoFilterTests.release.xcconfig"; sourceTree = "<group>"; };
+		7DB6F0A90365823E51CFBB73 /* Pods-VideoFilter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoFilter.release.xcconfig"; path = "Pods/Target Support Files/Pods-VideoFilter/Pods-VideoFilter.release.xcconfig"; sourceTree = "<group>"; };
 		82AB28AC1E5EE9740028F528 /* VideoFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AB28AF1E5EE9740028F528 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		82AB28B11E5EE9740028F528 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +61,16 @@
 		82AB28CB1E5EE9740028F528 /* VideoFilterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoFilterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AB28CF1E5EE9740028F528 /* VideoFilterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFilterUITests.swift; sourceTree = "<group>"; };
 		82AB28D11E5EE9740028F528 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		82AB28DD1E5EF7F20028F528 /* snowboarding_480p.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = snowboarding_480p.m4v; sourceTree = "<group>"; };
+		82AB28DE1E5F07A30028F528 /* PlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		82AB28E81E6400EE0028F528 /* dynamic.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = dynamic.acv; sourceTree = "<group>"; };
+		82F976D11E643107008163E1 /* DynamicFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicFilter.swift; sourceTree = "<group>"; };
+		82F976D31E6564E6008163E1 /* tone.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = tone.acv; sourceTree = "<group>"; };
+		82F976D51E6568F5008163E1 /* default.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = default.acv; sourceTree = "<group>"; };
+		A1426FD3BC87D8451B798185 /* Pods_VideoFilter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoFilter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC8380FD259B55995CD36D07 /* Pods-VideoFilterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoFilterUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VideoFilterUITests/Pods-VideoFilterUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		D857235DA3970C584C2185AD /* Pods_VideoFilterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoFilterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E87E9217945DCE27743B9EDC /* Pods-VideoFilterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoFilterTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VideoFilterTests/Pods-VideoFilterTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A48E1C40FD60C75685DEDDA3 /* Pods_VideoFilter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B33748E81D002FC25C8BEEE /* Pods_VideoFilterTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D0FEF19EDFC9C1380377F3F /* Pods_VideoFilterUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +108,8 @@
 				82AB28C31E5EE9740028F528 /* VideoFilterTests */,
 				82AB28CE1E5EE9740028F528 /* VideoFilterUITests */,
 				82AB28AD1E5EE9740028F528 /* Products */,
+				9DE40008B841A400E02AA5F6 /* Pods */,
+				D9FA9921E345739A1786593A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,10 +126,13 @@
 		82AB28AE1E5EE9740028F528 /* VideoFilter */ = {
 			isa = PBXGroup;
 			children = (
+				82F976D01E6430E5008163E1 /* FIlters */,
 				82AB28AF1E5EE9740028F528 /* AppDelegate.swift */,
 				82AB28B11E5EE9740028F528 /* ViewController.swift */,
+				82AB28DE1E5F07A30028F528 /* PlayerView.swift */,
 				82AB28B31E5EE9740028F528 /* Main.storyboard */,
 				82AB28B61E5EE9740028F528 /* Assets.xcassets */,
+				82AB28DD1E5EF7F20028F528 /* snowboarding_480p.m4v */,
 				82AB28B81E5EE9740028F528 /* LaunchScreen.storyboard */,
 				82AB28BB1E5EE9740028F528 /* Info.plist */,
 			);
@@ -125,6 +157,40 @@
 			path = VideoFilterUITests;
 			sourceTree = "<group>";
 		};
+		82F976D01E6430E5008163E1 /* FIlters */ = {
+			isa = PBXGroup;
+			children = (
+				82F976D31E6564E6008163E1 /* tone.acv */,
+				82AB28E81E6400EE0028F528 /* dynamic.acv */,
+				82F976D51E6568F5008163E1 /* default.acv */,
+				82F976D11E643107008163E1 /* DynamicFilter.swift */,
+			);
+			name = FIlters;
+			sourceTree = "<group>";
+		};
+		9DE40008B841A400E02AA5F6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7298F1D3CD4DB876FE01AC94 /* Pods-VideoFilter.debug.xcconfig */,
+				7DB6F0A90365823E51CFBB73 /* Pods-VideoFilter.release.xcconfig */,
+				E87E9217945DCE27743B9EDC /* Pods-VideoFilterTests.debug.xcconfig */,
+				76C826ADA81B458D6FE0A024 /* Pods-VideoFilterTests.release.xcconfig */,
+				BC8380FD259B55995CD36D07 /* Pods-VideoFilterUITests.debug.xcconfig */,
+				18C4E19FD8E199C8F1CBCE7A /* Pods-VideoFilterUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D9FA9921E345739A1786593A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A1426FD3BC87D8451B798185 /* Pods_VideoFilter.framework */,
+				506AEBA1C1950E156359AF71 /* Pods_VideoFilterTests.framework */,
+				D857235DA3970C584C2185AD /* Pods_VideoFilterUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +198,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 82AB28D41E5EE9740028F528 /* Build configuration list for PBXNativeTarget "VideoFilter" */;
 			buildPhases = (
+				E8CE822EC1BA060C575D0B87 /* [CP] Check Pods Manifest.lock */,
 				82AB28A81E5EE9740028F528 /* Sources */,
 				82AB28A91E5EE9740028F528 /* Frameworks */,
 				82AB28AA1E5EE9740028F528 /* Resources */,
+				C84D87C27507BC028777541F /* [CP] Embed Pods Frameworks */,
+				C5C965135164D9CEBB3F3CFE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -149,9 +218,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 82AB28D71E5EE9740028F528 /* Build configuration list for PBXNativeTarget "VideoFilterTests" */;
 			buildPhases = (
+				ABFC79DA7C8DC2852F07F0AB /* [CP] Check Pods Manifest.lock */,
 				82AB28BC1E5EE9740028F528 /* Sources */,
 				82AB28BD1E5EE9740028F528 /* Frameworks */,
 				82AB28BE1E5EE9740028F528 /* Resources */,
+				521788E32629E7D03FAA8138 /* [CP] Embed Pods Frameworks */,
+				74F808F038B478D6115E6C19 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -167,9 +239,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 82AB28DA1E5EE9740028F528 /* Build configuration list for PBXNativeTarget "VideoFilterUITests" */;
 			buildPhases = (
+				DC3CFE479D8377FC07335742 /* [CP] Check Pods Manifest.lock */,
 				82AB28C71E5EE9740028F528 /* Sources */,
 				82AB28C81E5EE9740028F528 /* Frameworks */,
 				82AB28C91E5EE9740028F528 /* Resources */,
+				48679260CBC22F46E15C24A3 /* [CP] Embed Pods Frameworks */,
+				79F06CBC08FDFEE9345A8297 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -235,6 +310,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82F976D61E656B4F008163E1 /* default.acv in Resources */,
+				82F976D41E6564F6008163E1 /* tone.acv in Resources */,
+				82AB28E91E6400F70028F528 /* dynamic.acv in Resources */,
+				82AB28E01E5FCE860028F528 /* snowboarding_480p.m4v in Resources */,
 				82AB28BA1E5EE9740028F528 /* LaunchScreen.storyboard in Resources */,
 				82AB28B71E5EE9740028F528 /* Assets.xcassets in Resources */,
 				82AB28B51E5EE9740028F528 /* Main.storyboard in Resources */,
@@ -257,11 +336,151 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		48679260CBC22F46E15C24A3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoFilterUITests/Pods-VideoFilterUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		521788E32629E7D03FAA8138 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoFilterTests/Pods-VideoFilterTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		74F808F038B478D6115E6C19 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoFilterTests/Pods-VideoFilterTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		79F06CBC08FDFEE9345A8297 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoFilterUITests/Pods-VideoFilterUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ABFC79DA7C8DC2852F07F0AB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C5C965135164D9CEBB3F3CFE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoFilter/Pods-VideoFilter-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C84D87C27507BC028777541F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-VideoFilter/Pods-VideoFilter-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DC3CFE479D8377FC07335742 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E8CE822EC1BA060C575D0B87 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		82AB28A81E5EE9740028F528 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82AB28DF1E5F07A30028F528 /* PlayerView.swift in Sources */,
+				82F976D21E643107008163E1 /* DynamicFilter.swift in Sources */,
 				82AB28B21E5EE9740028F528 /* ViewController.swift in Sources */,
 				82AB28B01E5EE9740028F528 /* AppDelegate.swift in Sources */,
 			);
@@ -413,6 +632,7 @@
 		};
 		82AB28D51E5EE9740028F528 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7298F1D3CD4DB876FE01AC94 /* Pods-VideoFilter.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 2L63G689GW;
@@ -426,6 +646,7 @@
 		};
 		82AB28D61E5EE9740028F528 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7DB6F0A90365823E51CFBB73 /* Pods-VideoFilter.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 2L63G689GW;
@@ -439,6 +660,7 @@
 		};
 		82AB28D81E5EE9740028F528 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E87E9217945DCE27743B9EDC /* Pods-VideoFilterTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -454,6 +676,7 @@
 		};
 		82AB28D91E5EE9740028F528 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76C826ADA81B458D6FE0A024 /* Pods-VideoFilterTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -469,6 +692,7 @@
 		};
 		82AB28DB1E5EE9740028F528 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC8380FD259B55995CD36D07 /* Pods-VideoFilterUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 2L63G689GW;
@@ -483,6 +707,7 @@
 		};
 		82AB28DC1E5EE9740028F528 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 18C4E19FD8E199C8F1CBCE7A /* Pods-VideoFilterUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = 2L63G689GW;
@@ -514,6 +739,7 @@
 				82AB28D61E5EE9740028F528 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		82AB28D71E5EE9740028F528 /* Build configuration list for PBXNativeTarget "VideoFilterTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +748,7 @@
 				82AB28D91E5EE9740028F528 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		82AB28DA1E5EE9740028F528 /* Build configuration list for PBXNativeTarget "VideoFilterUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +757,7 @@
 				82AB28DC1E5EE9740028F528 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
