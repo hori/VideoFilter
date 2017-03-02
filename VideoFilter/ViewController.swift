@@ -9,20 +9,40 @@
 import UIKit
 import AVFoundation
 import GPUImage
+import Accounts
 
 class ViewController: UIViewController {
 
   @IBOutlet weak var previewView: UIView!
   @IBOutlet weak var exportButton: UIButton!
+  @IBOutlet weak var filterCollectionView: UICollectionView!
 
   var player: AVPlayer! = nil
   var playerItem: AVPlayerItem! = nil
   var videoFrameSize: CGSize?
   var originalAsset: AVAsset?
+  var originalThumbnail: UIImage?
+  var thumbnails: [UIImage?] = []
+
   
-  var encodingMovieWriter: GPUImageMovieWriter?
-  var encodingMovie: GPUImageMovie?
-  var encodingFilter: GPUImageFilterGroup?
+  var renderingMovieWriter: GPUImageMovieWriter?
+  var renderingMovie: GPUImageMovie?
+  var renderingFilter: GPUImageFilterGroup?
+
+  var previewingMovie: GPUImageMovie!
+  let previewingView = GPUImageView()
+  
+  var currentFilter: GPUImageFilterGroup? = nil {
+    didSet{
+      currentFilter?.removeAllTargets()
+      previewingMovie.removeAllTargets()
+      previewingView.setInputRotation(kGPUImageRotateRight, at: 0) // TODO: detect original assets orientation
+      previewingView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill
+      previewingMovie.addTarget(currentFilter)
+      previewingMovie.playAtActualSpeed = true
+      currentFilter?.addTarget(previewingView)
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -34,33 +54,32 @@ class ViewController: UIViewController {
     originalAsset = AVAsset(url: pathUrl)
     let videoTrack = originalAsset?.tracks(withMediaType: AVMediaTypeVideo).first
     videoFrameSize = videoTrack?.naturalSize
+    
+    DispatchQueue.global(qos: .default).async {
+      self.originalThumbnail = self.thumbnail()
+      self.thumbnails = self.previewThumbnails()
+      DispatchQueue.main.async {
+        self.filterCollectionView.reloadData()
+      }
+    }
       
     playerItem = AVPlayerItem(url: pathUrl)
     player.replaceCurrentItem(with: playerItem)
     
-    let gpuMovie: GPUImageMovie! = GPUImageMovie(playerItem: playerItem)
-    gpuMovie.playAtActualSpeed = true
+    previewingMovie = GPUImageMovie(playerItem: playerItem)
+    previewingMovie.playAtActualSpeed = true
     
-    let filteredView: GPUImageView = GPUImageView();
-    filteredView.frame = self.view.frame
-    filteredView.setInputRotation(kGPUImageRotateRight, at: 0)
-    filteredView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill
-    previewView.addSubview(filteredView)
-    print(filteredView.frame)
-    print(filteredView.sizeInPixels)
+    previewingView.frame = self.view.frame
+    previewingView.setInputRotation(kGPUImageRotateRight, at: 0) // TODO: detect original assets orientation
+    previewingView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill
+    previewView.addSubview(previewingView)
+    print(previewingView.frame)
+    print(previewingView.sizeInPixels)
 
-    let dynamicFilter = DynamicFilter.init()
-    gpuMovie.addTarget(dynamicFilter)
-    gpuMovie.playAtActualSpeed = true
-    dynamicFilter.addTarget(filteredView)
+    currentFilter = VideoFilters[0].filter
     
-    gpuMovie.startProcessing()
+    previewingMovie.startProcessing()
 
-    
-    
-    
-    
-    
     player.play()
 
     // loop video
@@ -77,38 +96,142 @@ class ViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
   
+  //MARK: - for Export
+  
   @IBAction func beginExport(sender: AnyObject) {
   
-    let documentDirPath = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true).last!
-    let exportPath = documentDirPath + "/export.mov"
-    let exportUrl = URL.init(fileURLWithPath: exportPath)
+    self.removeRenderdMovie()
+    let exportUrl = self.urlOfRenderdMovie()
     print(exportUrl)
     player.pause()
     
-    encodingMovieWriter = GPUImageMovieWriter.init(movieURL: exportUrl, size: videoFrameSize! )
-
-    print(videoFrameSize)
+    // TODO: detect original assets orientation
+    renderingMovieWriter = GPUImageMovieWriter.init(movieURL: exportUrl, size: CGSize(width: videoFrameSize!.height, height: videoFrameSize!.width))
+    renderingMovieWriter?.setInputRotation(kGPUImageRotateRight, at: 0)
     
-    encodingMovie = GPUImageMovie.init(asset: originalAsset)
-    encodingFilter = DynamicFilter.init()
-    encodingMovie?.addTarget(encodingFilter)
-    encodingFilter?.addTarget(encodingMovieWriter)
-    encodingMovieWriter?.shouldPassthroughAudio = true
-    encodingMovie?.audioEncodingTarget = encodingMovieWriter
-    encodingMovie?.enableSynchronizedEncoding(using: encodingMovieWriter)
+    renderingMovie = GPUImageMovie.init(asset: originalAsset)
+    renderingFilter = DynamicFilter.init()
+    renderingMovie?.addTarget(renderingFilter)
+    renderingFilter?.addTarget(renderingMovieWriter)
+    renderingMovieWriter?.shouldPassthroughAudio = true
+    renderingMovie?.audioEncodingTarget = renderingMovieWriter
+    renderingMovie?.enableSynchronizedEncoding(using: renderingMovieWriter)
     
-    encodingMovieWriter?.completionBlock = {() -> Void in
+    renderingMovieWriter?.completionBlock = {() -> Void in
       print("completed")
-      self.encodingMovieWriter?.finishRecording()
-      self.encodingMovie?.cancelProcessing()
-      self.encodingMovie?.removeAllTargets()
-      self.encodingFilter?.removeAllTargets()
+      self.renderingMovieWriter?.finishRecording()
+      self.renderingMovie?.cancelProcessing()
+      self.renderingMovie?.removeAllTargets()
+      self.renderingFilter?.removeAllTargets()
+      self.shareWithAirDrop()
     }
-    encodingMovieWriter?.startRecording()
-    encodingMovie?.startProcessing()
+    renderingMovieWriter?.startRecording()
+    renderingMovie?.startProcessing()
     
   }
   
+  fileprivate func urlOfRenderdMovie() -> URL {
+    let manager = FileManager.default
+    let fileName = "renderd.mov"
+    let dir: URL! = manager.urls(for: .documentDirectory, in: .userDomainMask).last
+    let filePath = dir.appendingPathComponent(fileName)
+    return filePath.absoluteURL
+  }
+  
+  fileprivate func removeRenderdMovie() {
+    let manager = FileManager.default
+    let fileUrl = self.urlOfRenderdMovie()
+    if manager.fileExists(atPath: fileUrl.path)  {
+      do {
+        try manager.removeItem(atPath: fileUrl.path)
+      } catch {}
+    }
+  
+  }
 
+  fileprivate func thumbnail() -> UIImage? {
+    guard let asset = originalAsset else { return nil }
+    let generator = AVAssetImageGenerator(asset: asset)
+    generator.appliesPreferredTrackTransform = true
+    generator.requestedTimeToleranceAfter = kCMTimeZero;
+    generator.requestedTimeToleranceBefore = kCMTimeZero;
+    let cgimage: CGImage
+    do {
+      cgimage = try generator.copyCGImage(at: kCMTimeZero, actualTime: nil)
+    } catch {
+      return nil
+    }
+    let thumbnail = UIImage(cgImage: cgimage)
+    return thumbnail
+  }
+
+  fileprivate func previewThumbnails() -> [UIImage?] {
+    guard let original = originalThumbnail else { return [] }
+    var thumbnails:[UIImage?] = []
+    for videoFilter in VideoFilters {
+      let image = GPUImagePicture(image: original)
+      let filter = videoFilter.filter
+      image?.addTarget(filter)
+      filter?.useNextFrameForImageCapture()
+      image?.processImage()
+      let cgimage: CGImage? = filter?.newCGImageFromCurrentlyProcessedOutput().takeUnretainedValue()
+      thumbnails.append(UIImage(cgImage: cgimage!))
+    }
+    return thumbnails
+  }
+
+  //MARK: - for Debugging
+  
+  fileprivate func shareWithAirDrop() {
+    let fileUrl = self.urlOfRenderdMovie()
+    let activityVC = UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
+    activityVC.excludedActivityTypes = [
+      .postToFacebook,
+      .postToTwitter,
+      .postToWeibo,
+      .message,
+      .mail,
+      .print,
+      .copyToPasteboard,
+      .assignToContact,
+      .addToReadingList,
+      .postToFlickr,
+      .postToVimeo,
+      .postToTencentWeibo,
+      .openInIBooks
+    ]
+    self.present(activityVC, animated: true, completion: nil)
+  }
+}
+
+
+//MARK: - CollectonView
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+
+  func numberOfSections(in collectionView: UICollectionView) -> Int {
+    return 1
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return thumbnails.count
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    print(indexPath.row)
+    let videoFilter = VideoFilters[indexPath.row]
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ThumbnailCell", for: indexPath)
+
+    let label = cell.contentView.viewWithTag(2) as! UILabel
+    label.text = videoFilter.name
+
+    let imageView = cell.contentView.viewWithTag(1) as! UIImageView
+    imageView.image = thumbnails[indexPath.row]
+
+    return cell
+  }
+
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    currentFilter = VideoFilters[indexPath.row].filter
+  }
 }
 

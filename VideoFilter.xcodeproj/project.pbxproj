@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2B33748E81D002FC25C8BEEE /* Pods_VideoFilterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506AEBA1C1950E156359AF71 /* Pods_VideoFilterTests.framework */; };
 		6D0FEF19EDFC9C1380377F3F /* Pods_VideoFilterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D857235DA3970C584C2185AD /* Pods_VideoFilterUITests.framework */; };
+		828457B91E67B1C9009BFA43 /* EleganceFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828457B81E67B1C9009BFA43 /* EleganceFilter.swift */; };
+		828457BB1E67B2DC009BFA43 /* elegance.acv in Resources */ = {isa = PBXBuildFile; fileRef = 828457BA1E67B25B009BFA43 /* elegance.acv */; };
+		828457BD1E68060D009BFA43 /* VideoFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 828457BC1E68060D009BFA43 /* VideoFilter.swift */; };
 		82AB28B01E5EE9740028F528 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AB28AF1E5EE9740028F528 /* AppDelegate.swift */; };
 		82AB28B21E5EE9740028F528 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82AB28B11E5EE9740028F528 /* ViewController.swift */; };
 		82AB28B51E5EE9740028F528 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 82AB28B31E5EE9740028F528 /* Main.storyboard */; };
@@ -48,6 +51,9 @@
 		7298F1D3CD4DB876FE01AC94 /* Pods-VideoFilter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoFilter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-VideoFilter/Pods-VideoFilter.debug.xcconfig"; sourceTree = "<group>"; };
 		76C826ADA81B458D6FE0A024 /* Pods-VideoFilterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoFilterTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-VideoFilterTests/Pods-VideoFilterTests.release.xcconfig"; sourceTree = "<group>"; };
 		7DB6F0A90365823E51CFBB73 /* Pods-VideoFilter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VideoFilter.release.xcconfig"; path = "Pods/Target Support Files/Pods-VideoFilter/Pods-VideoFilter.release.xcconfig"; sourceTree = "<group>"; };
+		828457B81E67B1C9009BFA43 /* EleganceFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EleganceFilter.swift; sourceTree = "<group>"; };
+		828457BA1E67B25B009BFA43 /* elegance.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = elegance.acv; sourceTree = "<group>"; };
+		828457BC1E68060D009BFA43 /* VideoFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoFilter.swift; sourceTree = "<group>"; };
 		82AB28AC1E5EE9740028F528 /* VideoFilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoFilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		82AB28AF1E5EE9740028F528 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		82AB28B11E5EE9740028F528 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -163,7 +169,10 @@
 				82F976D31E6564E6008163E1 /* tone.acv */,
 				82AB28E81E6400EE0028F528 /* dynamic.acv */,
 				82F976D51E6568F5008163E1 /* default.acv */,
+				828457BA1E67B25B009BFA43 /* elegance.acv */,
+				828457BC1E68060D009BFA43 /* VideoFilter.swift */,
 				82F976D11E643107008163E1 /* DynamicFilter.swift */,
+				828457B81E67B1C9009BFA43 /* EleganceFilter.swift */,
 			);
 			name = FIlters;
 			sourceTree = "<group>";
@@ -310,6 +319,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				828457BB1E67B2DC009BFA43 /* elegance.acv in Resources */,
 				82F976D61E656B4F008163E1 /* default.acv in Resources */,
 				82F976D41E6564F6008163E1 /* tone.acv in Resources */,
 				82AB28E91E6400F70028F528 /* dynamic.acv in Resources */,
@@ -480,9 +490,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				82AB28DF1E5F07A30028F528 /* PlayerView.swift in Sources */,
+				828457BD1E68060D009BFA43 /* VideoFilter.swift in Sources */,
 				82F976D21E643107008163E1 /* DynamicFilter.swift in Sources */,
 				82AB28B21E5EE9740028F528 /* ViewController.swift in Sources */,
 				82AB28B01E5EE9740028F528 /* AppDelegate.swift in Sources */,
+				828457B91E67B1C9009BFA43 /* EleganceFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
