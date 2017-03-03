@@ -8,6 +8,12 @@
 
 import GPUImage
 
+class EleganceFilterClass: VideoFilterClass {
+  func instantiate() -> GPUImageFilterGroup {
+    return EleganceFilter()
+  }
+}
+
 class EleganceFilter: GPUImageFilterGroup {
   
   let colorRemapImage: String = "filter_elegance"

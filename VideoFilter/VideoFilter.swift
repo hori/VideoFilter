@@ -9,16 +9,21 @@
 import Foundation
 import GPUImage
 
+protocol VideoFilterClass: class {
+  func instantiate() -> GPUImageFilterGroup
+}
+
 struct VideoFilter {
   var name: String
-  var filter: GPUImageFilterGroup?
+  var filterClass: VideoFilterClass?
 }
 
 let VideoFilters: [VideoFilter] = [
-  VideoFilter(name: "Dynamic", filter: DynamicFilter()),
-  VideoFilter(name: "Elegance", filter: EleganceFilter()),
-  VideoFilter(name: "Dynamic2", filter: DynamicFilter()),
-  VideoFilter(name: "Elegance2", filter: EleganceFilter()),
-  VideoFilter(name: "Dynamic3", filter: DynamicFilter()),
-  VideoFilter(name: "Elegance4", filter: EleganceFilter())
+  VideoFilter(name: "Original", filterClass: nil),
+  VideoFilter(name: "Dynamic", filterClass: DynamicFilterClass()),
+  VideoFilter(name: "Elegance", filterClass: EleganceFilterClass()),
+  VideoFilter(name: "Dynamic2", filterClass: DynamicFilterClass()),
+  VideoFilter(name: "Elegance2", filterClass: EleganceFilterClass()),
+  VideoFilter(name: "Dynamic3", filterClass: DynamicFilterClass()),
+  VideoFilter(name: "Elegance4", filterClass: EleganceFilterClass())
 ]

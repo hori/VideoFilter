@@ -29,6 +29,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvo-hU-TIR">
                                 <rect key="frame" x="164" y="40" width="46" height="30"/>
                                 <state key="normal" title="Export"/>
+                                <connections>
+                                    <action selector="beginExport:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DRr-h5-BKw"/>
+                                </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="1GD-ud-9VR">
                                 <rect key="frame" x="16" y="497" width="343" height="120"/>

@@ -23,24 +23,29 @@ class ViewController: UIViewController {
   var originalAsset: AVAsset?
   var originalThumbnail: UIImage?
   var thumbnails: [UIImage?] = []
-
   
   var renderingMovieWriter: GPUImageMovieWriter?
   var renderingMovie: GPUImageMovie?
-  var renderingFilter: GPUImageFilterGroup?
+  var renderingFilter: GPUImageFilterGroup? = nil {
+    willSet{
+      previewingFilter?.removeAllTargets()
+    }
+  }
 
   var previewingMovie: GPUImageMovie!
   let previewingView = GPUImageView()
   
-  var currentFilter: GPUImageFilterGroup? = nil {
-    didSet{
-      currentFilter?.removeAllTargets()
+  var previewingFilter: GPUImageFilterGroup? = nil {
+    willSet{
+      previewingFilter?.removeAllTargets()
       previewingMovie.removeAllTargets()
+    }
+    didSet{
       previewingView.setInputRotation(kGPUImageRotateRight, at: 0) // TODO: detect original assets orientation
       previewingView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill
-      previewingMovie.addTarget(currentFilter)
+      previewingMovie.addTarget(previewingFilter)
       previewingMovie.playAtActualSpeed = true
-      currentFilter?.addTarget(previewingView)
+      previewingFilter?.addTarget(previewingView)
     }
   }
   
@@ -76,7 +81,7 @@ class ViewController: UIViewController {
     print(previewingView.frame)
     print(previewingView.sizeInPixels)
 
-    currentFilter = VideoFilters[0].filter
+    previewingFilter = VideoFilters[0].filterClass?.instantiate()
     
     previewingMovie.startProcessing()
 
@@ -98,8 +103,12 @@ class ViewController: UIViewController {
   
   //MARK: - for Export
   
-  @IBAction func beginExport(sender: AnyObject) {
-  
+  @IBAction func beginExport(_ sender: AnyObject) {
+
+    if renderingFilter == nil {
+      return
+    }
+    
     self.removeRenderdMovie()
     let exportUrl = self.urlOfRenderdMovie()
     print(exportUrl)
@@ -110,7 +119,6 @@ class ViewController: UIViewController {
     renderingMovieWriter?.setInputRotation(kGPUImageRotateRight, at: 0)
     
     renderingMovie = GPUImageMovie.init(asset: originalAsset)
-    renderingFilter = DynamicFilter.init()
     renderingMovie?.addTarget(renderingFilter)
     renderingFilter?.addTarget(renderingMovieWriter)
     renderingMovieWriter?.shouldPassthroughAudio = true
@@ -169,13 +177,18 @@ class ViewController: UIViewController {
     guard let original = originalThumbnail else { return [] }
     var thumbnails:[UIImage?] = []
     for videoFilter in VideoFilters {
-      let image = GPUImagePicture(image: original)
-      let filter = videoFilter.filter
-      image?.addTarget(filter)
-      filter?.useNextFrameForImageCapture()
-      image?.processImage()
-      let cgimage: CGImage? = filter?.newCGImageFromCurrentlyProcessedOutput().takeUnretainedValue()
-      thumbnails.append(UIImage(cgImage: cgimage!))
+      print(videoFilter.filterClass)
+      if let filter = videoFilter.filterClass?.instantiate(),
+         let image = GPUImagePicture(image: original)
+      {
+        image.addTarget(filter)
+        filter.useNextFrameForImageCapture()
+        image.processImage()
+        let cgimage: CGImage? = filter.newCGImageFromCurrentlyProcessedOutput().takeUnretainedValue()
+        thumbnails.append(UIImage(cgImage: cgimage!))
+      } else {
+        thumbnails.append(original)
+      }
     }
     return thumbnails
   }
@@ -231,7 +244,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    currentFilter = VideoFilters[indexPath.row].filter
+    previewingFilter = VideoFilters[indexPath.row].filterClass?.instantiate()
+    renderingFilter = VideoFilters[indexPath.row].filterClass?.instantiate()
   }
 }
 

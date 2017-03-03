@@ -5,7 +5,14 @@
 //  Created by hor on 2017/02/27.
 //  Copyright © 2017年 dope.industries. All rights reserved.
 //
+
 import GPUImage
+
+class DynamicFilterClass: VideoFilterClass {
+  func instantiate() -> GPUImageFilterGroup {
+    return DynamicFilter()
+  }
+}
 
 class DynamicFilter: GPUImageFilterGroup {
   
