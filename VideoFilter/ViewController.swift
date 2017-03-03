@@ -16,6 +16,8 @@ class ViewController: UIViewController {
   @IBOutlet weak var previewView: UIView!
   @IBOutlet weak var exportButton: UIButton!
   @IBOutlet weak var filterCollectionView: UICollectionView!
+  @IBOutlet weak var coveredView: UIView!
+  @IBOutlet weak var processingExportView: UIView!
 
   var player: AVPlayer! = nil
   var playerItem: AVPlayerItem! = nil
@@ -24,11 +26,13 @@ class ViewController: UIViewController {
   var originalThumbnail: UIImage?
   var thumbnails: [UIImage?] = []
   
+  var observeExportProgressTimer: Timer?
+  
   var renderingMovieWriter: GPUImageMovieWriter?
   var renderingMovie: GPUImageMovie?
   var renderingFilter: GPUImageFilterGroup? = nil {
     willSet{
-      previewingFilter?.removeAllTargets()
+      renderingFilter?.removeAllTargets()
     }
   }
 
@@ -39,6 +43,11 @@ class ViewController: UIViewController {
     willSet{
       previewingFilter?.removeAllTargets()
       previewingMovie.removeAllTargets()
+      for subview in previewView.subviews {
+        subview.removeFromSuperview()
+      }
+      coveredView.isHidden = false
+      coveredView.alpha = 1.0
     }
     didSet{
       previewingView.setInputRotation(kGPUImageRotateRight, at: 0) // TODO: detect original assets orientation
@@ -46,7 +55,19 @@ class ViewController: UIViewController {
       previewingMovie.addTarget(previewingFilter)
       previewingMovie.playAtActualSpeed = true
       previewingFilter?.addTarget(previewingView)
+      UIView.animate(withDuration: 0.3, delay: 0.2, options: .curveEaseOut, animations: {
+        self.coveredView.alpha = 0.0
+      }, completion: { _ in
+        self.coveredView.isHidden = true
+      })
+      previewView.addSubview(previewingView)
+      previewingMovie.startProcessing()
     }
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    processingExportView.isHidden = true
   }
   
   override func viewDidLoad() {
@@ -73,18 +94,10 @@ class ViewController: UIViewController {
     
     previewingMovie = GPUImageMovie(playerItem: playerItem)
     previewingMovie.playAtActualSpeed = true
-    
     previewingView.frame = self.view.frame
-    previewingView.setInputRotation(kGPUImageRotateRight, at: 0) // TODO: detect original assets orientation
-    previewingView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill
-    previewView.addSubview(previewingView)
-    print(previewingView.frame)
-    print(previewingView.sizeInPixels)
 
     previewingFilter = VideoFilters[0].filterClass?.instantiate()
     
-    previewingMovie.startProcessing()
-
     player.play()
 
     // loop video
@@ -108,6 +121,11 @@ class ViewController: UIViewController {
     if renderingFilter == nil {
       return
     }
+
+    processingExportView.isHidden = false
+
+    observeExportProgressTimer = Timer.init(timeInterval: 1, target: self, selector: #selector(self.observeExportProgress(_:)), userInfo: nil, repeats: true)
+    observeExportProgressTimer?.fire()
     
     self.removeRenderdMovie()
     let exportUrl = self.urlOfRenderdMovie()
@@ -127,15 +145,26 @@ class ViewController: UIViewController {
     
     renderingMovieWriter?.completionBlock = {() -> Void in
       print("completed")
+      self.observeExportProgressTimer?.invalidate()
       self.renderingMovieWriter?.finishRecording()
-      self.renderingMovie?.cancelProcessing()
+      self.renderingMovie?.endProcessing()
       self.renderingMovie?.removeAllTargets()
       self.renderingFilter?.removeAllTargets()
       self.shareWithAirDrop()
     }
     renderingMovieWriter?.startRecording()
     renderingMovie?.startProcessing()
-    
+
+  }
+  
+  @IBAction func cancelExport(_ sender: AnyObject) {
+    print("canceled")
+    processingExportView.isHidden = true
+    observeExportProgressTimer?.invalidate()
+    renderingMovieWriter?.cancelRecording()
+    renderingMovie?.cancelProcessing()
+    renderingMovie?.removeAllTargets()
+    renderingFilter?.removeAllTargets()
   }
   
   fileprivate func urlOfRenderdMovie() -> URL {
@@ -154,7 +183,11 @@ class ViewController: UIViewController {
         try manager.removeItem(atPath: fileUrl.path)
       } catch {}
     }
+  }
   
+  func observeExportProgress(_ timer: Timer) {
+    print("hi")
+    print(renderingMovie?.progress)
   }
 
   fileprivate func thumbnail() -> UIImage? {
