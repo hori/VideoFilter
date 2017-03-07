@@ -26,10 +26,6 @@
                                 <rect key="frame" x="0.0" y="-2" width="375" height="669"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RhX-aS-o3g">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
-                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvo-hU-TIR">
                                 <rect key="frame" x="164" y="40" width="46" height="30"/>
                                 <state key="normal" title="Export"/>
@@ -109,26 +105,21 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ukD-zm-o5Q" secondAttribute="bottom" id="5ZM-if-fCR"/>
-                            <constraint firstItem="RhX-aS-o3g" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="899-5J-SaE"/>
                             <constraint firstItem="dvo-hU-TIR" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="9MV-zs-DoN"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ezg-S3-mmR" secondAttribute="bottom" id="AQR-R3-Xfk"/>
                             <constraint firstItem="dvo-hU-TIR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Fer-g1-Cp7"/>
                             <constraint firstItem="ukD-zm-o5Q" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="ItN-25-ajo"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="RhX-aS-o3g" secondAttribute="bottom" id="Mt1-Ik-M5I"/>
                             <constraint firstAttribute="trailing" secondItem="ukD-zm-o5Q" secondAttribute="trailing" id="P87-Pc-633"/>
                             <constraint firstItem="ukD-zm-o5Q" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ygf-1S-cF2"/>
                             <constraint firstItem="1GD-ud-9VR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="ZmO-3H-ymJ"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="1GD-ud-9VR" secondAttribute="bottom" constant="50" id="bCS-CY-Ywc"/>
-                            <constraint firstAttribute="trailing" secondItem="RhX-aS-o3g" secondAttribute="trailing" id="bKW-ou-sB1"/>
                             <constraint firstItem="Ezg-S3-mmR" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-22" id="l7e-MS-sKB"/>
-                            <constraint firstItem="RhX-aS-o3g" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="nKt-G1-9by"/>
                             <constraint firstItem="Ezg-S3-mmR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="rPr-iH-wrs"/>
                             <constraint firstAttribute="trailing" secondItem="Ezg-S3-mmR" secondAttribute="trailing" id="tz7-em-a16"/>
                             <constraint firstAttribute="trailingMargin" secondItem="1GD-ud-9VR" secondAttribute="trailing" id="wLW-TJ-3fS"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="coveredView" destination="RhX-aS-o3g" id="F1q-qQ-rbv"/>
                         <outlet property="exportButton" destination="dvo-hU-TIR" id="e1G-sT-SjX"/>
                         <outlet property="filterCollectionView" destination="1GD-ud-9VR" id="lLp-Vc-z0J"/>
                         <outlet property="previewView" destination="Ezg-S3-mmR" id="EmL-dz-KNZ"/>

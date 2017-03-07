@@ -16,7 +16,6 @@ class ViewController: UIViewController {
   @IBOutlet weak var previewView: UIView!
   @IBOutlet weak var exportButton: UIButton!
   @IBOutlet weak var filterCollectionView: UICollectionView!
-  @IBOutlet weak var coveredView: UIView!
   @IBOutlet weak var processingExportView: UIView!
 
   var player: AVPlayer! = nil
@@ -26,7 +25,7 @@ class ViewController: UIViewController {
   var originalThumbnail: UIImage?
   var thumbnails: [UIImage?] = []
   
-  var observeExportProgressTimer: Timer?
+  weak var observeExportProgressTimer: Timer?
   
   var renderingMovieWriter: GPUImageMovieWriter?
   var renderingMovie: GPUImageMovie?
@@ -41,27 +40,20 @@ class ViewController: UIViewController {
   
   var previewingFilter: GPUImageFilterGroup? = nil {
     willSet{
-      previewingFilter?.removeAllTargets()
       previewingMovie.removeAllTargets()
-      for subview in previewView.subviews {
-        subview.removeFromSuperview()
-      }
-      coveredView.isHidden = false
-      coveredView.alpha = 1.0
+      previewingFilter?.removeAllTargets()
+      previewingFilter = nil
+
     }
     didSet{
       previewingView.setInputRotation(kGPUImageRotateRight, at: 0) // TODO: detect original assets orientation
       previewingView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill
+
       previewingMovie.addTarget(previewingFilter)
       previewingMovie.playAtActualSpeed = true
       previewingFilter?.addTarget(previewingView)
-      UIView.animate(withDuration: 0.3, delay: 0.2, options: .curveEaseOut, animations: {
-        self.coveredView.alpha = 0.0
-      }, completion: { _ in
-        self.coveredView.isHidden = true
-      })
-      previewView.addSubview(previewingView)
-      previewingMovie.startProcessing()
+//      previewingMovie.startProcessing()
+      
     }
   }
   
@@ -73,7 +65,8 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let path = Bundle.main.path(forResource: "snowboarding_480p", ofType: "m4v")
+    let path = Bundle.main.path(forResource: "ballet", ofType: "m4v")
+//    let path = Bundle.main.path(forResource: "snowboarding_480p", ofType: "m4v")
     player = AVPlayer()
     let pathUrl = NSURL.fileURL(withPath: path!)
     
@@ -95,8 +88,11 @@ class ViewController: UIViewController {
     previewingMovie = GPUImageMovie(playerItem: playerItem)
     previewingMovie.playAtActualSpeed = true
     previewingView.frame = self.view.frame
+    previewView.addSubview(previewingView)
 
     previewingFilter = VideoFilters[0].filterClass?.instantiate()
+    previewingMovie.startProcessing()
+
     
     player.play()
 
@@ -123,9 +119,6 @@ class ViewController: UIViewController {
     }
 
     processingExportView.isHidden = false
-
-    observeExportProgressTimer = Timer.init(timeInterval: 1, target: self, selector: #selector(self.observeExportProgress(_:)), userInfo: nil, repeats: true)
-    observeExportProgressTimer?.fire()
     
     self.removeRenderdMovie()
     let exportUrl = self.urlOfRenderdMovie()
@@ -154,6 +147,8 @@ class ViewController: UIViewController {
     }
     renderingMovieWriter?.startRecording()
     renderingMovie?.startProcessing()
+
+    observeExportProgressTimer = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(observeExportProgress(_:)), userInfo: nil, repeats: true)
 
   }
   

@@ -1,26 +1,26 @@
 //
-//  DynamicFilter.swift
+//  AquaFilter.swift
 //  VideoFilter
 //
-//  Created by hor on 2017/02/27.
+//  Created by hor on 2017/03/06.
 //  Copyright © 2017年 dope.industries. All rights reserved.
 //
 
 import GPUImage
 
-class DynamicFilterClass: VideoFilterClass {
+class AquaFilterClass: VideoFilterClass {
   func instantiate() -> GPUImageFilterGroup {
-    return DynamicFilter()
+    return AquaFilter()
   }
 }
 
-class DynamicFilter: GPUImageFilterGroup {
+class AquaFilter: GPUImageFilterGroup {
   
-  let colorRemapImage: String = "filter_dynamic"
-  let toneAcv: String = "filter_dynamic"
-
+  let colorRemapImage: String = "filter_aqua"
+  let toneAcv: String = "filter_aqua"
+  
   public var lookupImageSource: GPUImagePicture!
-
+  
   public override init(){
     super.init()
     
@@ -29,17 +29,17 @@ class DynamicFilter: GPUImageFilterGroup {
     let lookupFilter = GPUImageLookupFilter.init()
     lookupFilter.intensity = 1.0
     self.addFilter(lookupFilter)
-
+    
     lookupImageSource.addTarget(lookupFilter, atTextureLocation: 1)
     lookupImageSource.processImage()
-
+    
     let acvURL = NSURL.fileURL(withPath: Bundle.main.path(forResource: toneAcv, ofType: "acv")!)
     let toneCorveFilter = GPUImageToneCurveFilter.init(acvurl: acvURL)
     lookupFilter.addTarget(toneCorveFilter)
     self.addFilter(toneCorveFilter)
-
+    
     self.initialFilters = [lookupFilter]
     self.terminalFilter = toneCorveFilter
   }
-
+  
 }

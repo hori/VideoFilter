@@ -17,7 +17,7 @@ class EleganceFilterClass: VideoFilterClass {
 class EleganceFilter: GPUImageFilterGroup {
   
   let colorRemapImage: String = "filter_elegance"
-  let toneAcv: String = "elegance"
+  let toneAcv: String = "filter_elegance"
   
   public var lookupImageSource: GPUImagePicture!
   
