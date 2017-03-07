@@ -33,6 +33,8 @@
 		82DB0EF31E6D783C00CF1CB8 /* OriginalFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DB0EF21E6D783C00CF1CB8 /* OriginalFilter.swift */; };
 		82DB0EF51E6D7A6600CF1CB8 /* EchoFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DB0EF41E6D7A6600CF1CB8 /* EchoFilter.swift */; };
 		82DB0EF71E6D7C5500CF1CB8 /* ballet.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 82DB0EF61E6D7C5500CF1CB8 /* ballet.m4v */; };
+		82E4BD4A1E6EC2B2008AF03E /* FlareFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E4BD491E6EC2B2008AF03E /* FlareFilter.swift */; };
+		82E4BD4C1E6EC375008AF03E /* overlay_flere.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 82E4BD4B1E6EC375008AF03E /* overlay_flere.mp4 */; };
 		82F976D21E643107008163E1 /* DynamicFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F976D11E643107008163E1 /* DynamicFilter.swift */; };
 		82F976D61E656B4F008163E1 /* default.acv in Resources */ = {isa = PBXBuildFile; fileRef = 82F976D51E6568F5008163E1 /* default.acv */; };
 		A48E1C40FD60C75685DEDDA3 /* Pods_VideoFilter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1426FD3BC87D8451B798185 /* Pods_VideoFilter.framework */; };
@@ -91,6 +93,8 @@
 		82DB0EF21E6D783C00CF1CB8 /* OriginalFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OriginalFilter.swift; sourceTree = "<group>"; };
 		82DB0EF41E6D7A6600CF1CB8 /* EchoFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EchoFilter.swift; sourceTree = "<group>"; };
 		82DB0EF61E6D7C5500CF1CB8 /* ballet.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = ballet.m4v; sourceTree = "<group>"; };
+		82E4BD491E6EC2B2008AF03E /* FlareFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlareFilter.swift; sourceTree = "<group>"; };
+		82E4BD4B1E6EC375008AF03E /* overlay_flere.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = overlay_flere.mp4; sourceTree = "<group>"; };
 		82F976D11E643107008163E1 /* DynamicFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicFilter.swift; sourceTree = "<group>"; };
 		82F976D51E6568F5008163E1 /* default.acv */ = {isa = PBXFileReference; lastKnownFileType = file; path = default.acv; sourceTree = "<group>"; };
 		A1426FD3BC87D8451B798185 /* Pods_VideoFilter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VideoFilter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -194,8 +198,10 @@
 				82DB0EE11E6D711800CF1CB8 /* filter_elegance.acv */,
 				82DB0EE21E6D711800CF1CB8 /* filter_light.acv */,
 				82DB0EE31E6D711800CF1CB8 /* filter_toy.acv */,
+				82E4BD4B1E6EC375008AF03E /* overlay_flere.mp4 */,
 				828457BC1E68060D009BFA43 /* VideoFilter.swift */,
 				82F976D11E643107008163E1 /* DynamicFilter.swift */,
+				82E4BD491E6EC2B2008AF03E /* FlareFilter.swift */,
 				82DB0EF21E6D783C00CF1CB8 /* OriginalFilter.swift */,
 				82DB0EF41E6D7A6600CF1CB8 /* EchoFilter.swift */,
 				82DB0EEA1E6D726500CF1CB8 /* AquaFilter.swift */,
@@ -349,6 +355,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82E4BD4C1E6EC375008AF03E /* overlay_flere.mp4 in Resources */,
 				82DB0EE41E6D720E00CF1CB8 /* filter_antique.acv in Resources */,
 				82DB0EE51E6D720E00CF1CB8 /* filter_aqua.acv in Resources */,
 				82DB0EE61E6D720E00CF1CB8 /* filter_dynamic.acv in Resources */,
@@ -528,6 +535,7 @@
 				828457BD1E68060D009BFA43 /* VideoFilter.swift in Sources */,
 				82DB0EF31E6D783C00CF1CB8 /* OriginalFilter.swift in Sources */,
 				82DB0EED1E6D729A00CF1CB8 /* LightFilter.swift in Sources */,
+				82E4BD4A1E6EC2B2008AF03E /* FlareFilter.swift in Sources */,
 				82F976D21E643107008163E1 /* DynamicFilter.swift in Sources */,
 				82AB28B21E5EE9740028F528 /* ViewController.swift in Sources */,
 				82AB28B01E5EE9740028F528 /* AppDelegate.swift in Sources */,
