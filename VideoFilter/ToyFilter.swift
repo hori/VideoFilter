@@ -12,6 +12,9 @@ class ToyFilterClass: VideoFilterClass {
   func instantiate() -> GPUImageFilterGroup {
     return ToyFilter()
   }
+  func thumbnailFilterInstantiate() -> GPUImageFilterGroup {
+    return ToyFilter()
+  }
 }
 
 class ToyFilter: GPUImageFilterGroup {

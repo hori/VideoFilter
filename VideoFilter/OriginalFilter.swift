@@ -12,6 +12,9 @@ class OriginalFilterClass: VideoFilterClass {
   func instantiate() -> GPUImageFilterGroup {
     return OriginalFilter()
   }
+  func thumbnailFilterInstantiate() -> GPUImageFilterGroup {
+    return OriginalFilter()
+  }
 }
 
 class OriginalFilter: GPUImageFilterGroup {

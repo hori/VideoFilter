@@ -12,6 +12,9 @@ class EchoFilterClass: VideoFilterClass {
   func instantiate() -> GPUImageFilterGroup {
     return EchoFilter()
   }
+  func thumbnailFilterInstantiate() -> GPUImageFilterGroup {
+    return EchoFilterForThumbnail()
+  }
 }
 
 class EchoFilter: GPUImageFilterGroup {
@@ -24,6 +27,20 @@ class EchoFilter: GPUImageFilterGroup {
     
     self.initialFilters = [lowpassFilter]
     self.terminalFilter = lowpassFilter
+  }
+  
+}
+
+class EchoFilterForThumbnail: GPUImageFilterGroup {
+  
+  public override init(){
+    super.init()
+    
+    let filter = GPUImageBoxBlurFilter.init()
+    self.addFilter(filter)
+    
+    self.initialFilters = [filter]
+    self.terminalFilter = filter
   }
   
 }

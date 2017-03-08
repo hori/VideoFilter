@@ -65,8 +65,8 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    let path = Bundle.main.path(forResource: "ballet", ofType: "m4v")
-//    let path = Bundle.main.path(forResource: "snowboarding_480p", ofType: "m4v")
+//    let path = Bundle.main.path(forResource: "ballet", ofType: "m4v")
+    let path = Bundle.main.path(forResource: "snowboarding_480p", ofType: "m4v")
     player = AVPlayer()
     let pathUrl = NSURL.fileURL(withPath: path!)
     
@@ -205,8 +205,7 @@ class ViewController: UIViewController {
     guard let original = originalThumbnail else { return [] }
     var thumbnails:[UIImage?] = []
     for videoFilter in VideoFilters {
-      print(videoFilter.filterClass)
-      if let filter = videoFilter.filterClass?.instantiate(),
+      if let filter = videoFilter.filterClass?.thumbnailFilterInstantiate(),
          let image = GPUImagePicture(image: original)
       {
         image.addTarget(filter)

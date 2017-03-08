@@ -12,6 +12,9 @@ class EleganceFilterClass: VideoFilterClass {
   func instantiate() -> GPUImageFilterGroup {
     return EleganceFilter()
   }
+  func thumbnailFilterInstantiate() -> GPUImageFilterGroup {
+    return EleganceFilter()
+  }
 }
 
 class EleganceFilter: GPUImageFilterGroup {

@@ -12,6 +12,9 @@ class DynamicFilterClass: VideoFilterClass {
   func instantiate() -> GPUImageFilterGroup {
     return DynamicFilter()
   }
+  func thumbnailFilterInstantiate() -> GPUImageFilterGroup {
+    return DynamicFilter()
+  }
 }
 
 class DynamicFilter: GPUImageFilterGroup {

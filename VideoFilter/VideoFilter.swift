@@ -11,6 +11,7 @@ import GPUImage
 
 protocol VideoFilterClass: class {
   func instantiate() -> GPUImageFilterGroup
+  func thumbnailFilterInstantiate() ->  GPUImageFilterGroup
 }
 
 struct VideoFilter {

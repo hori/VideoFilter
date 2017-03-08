@@ -12,6 +12,10 @@ class AquaFilterClass: VideoFilterClass {
   func instantiate() -> GPUImageFilterGroup {
     return AquaFilter()
   }
+  func thumbnailFilterInstantiate() -> GPUImageFilterGroup {
+    return AquaFilter()
+  }
+
 }
 
 class AquaFilter: GPUImageFilterGroup {

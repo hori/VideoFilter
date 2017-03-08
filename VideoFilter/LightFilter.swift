@@ -12,6 +12,9 @@ class LightFilterClass: VideoFilterClass {
   func instantiate() -> GPUImageFilterGroup {
     return LightFilter()
   }
+  func thumbnailFilterInstantiate() -> GPUImageFilterGroup {
+    return LightFilter()
+  }
 }
 
 class LightFilter: GPUImageFilterGroup {
