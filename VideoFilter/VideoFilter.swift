@@ -21,7 +21,7 @@ struct VideoFilter {
 
 let VideoFilters: [VideoFilter] = [
   VideoFilter(name: "Original", filterClass: OriginalFilterClass()),
-  VideoFilter(name: "Flare", filterClass: FlareFilterClass()),
+//  VideoFilter(name: "Flare", filterClass: FlareFilterClass()),
   VideoFilter(name: "Echo", filterClass: EchoFilterClass()),
   VideoFilter(name: "Dynamic", filterClass: DynamicFilterClass()),
   VideoFilter(name: "Elegance", filterClass: EleganceFilterClass()),

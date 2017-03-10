@@ -25,6 +25,17 @@ class ViewController: UIViewController {
   var originalThumbnail: UIImage?
   var thumbnails: [UIImage?] = []
   
+  var testSourceMovie: GPUImageMovie?
+  var testFlareMovie: GPUImageMovie?
+  var testMovieWriter: GPUImageMovieWriter?
+  
+  var overlayMovie: GPUImageMovie? = nil {
+    willSet{
+      overlayMovie?.cancelProcessing()
+      overlayMovie?.removeAllTargets()
+    }
+  }
+  
   weak var observeExportProgressTimer: Timer?
   
   var renderingMovieWriter: GPUImageMovieWriter?
@@ -38,21 +49,35 @@ class ViewController: UIViewController {
   var previewingMovie: GPUImageMovie!
   let previewingView = GPUImageView()
   
-  var previewingFilter: GPUImageFilterGroup? = nil {
+  weak var previewingFilter: GPUImageFilterGroup? = nil {
     willSet{
+//      previewingMovie.cancelProcessing()
       previewingMovie.removeAllTargets()
       previewingFilter?.removeAllTargets()
-      previewingFilter = nil
-
+      overlayMovie?.cancelProcessing()
+      overlayMovie?.removeAllTargets()
     }
     didSet{
       previewingView.setInputRotation(kGPUImageRotateRight, at: 0) // TODO: detect original assets orientation
       previewingView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill
 
-      previewingMovie.addTarget(previewingFilter)
-      previewingMovie.playAtActualSpeed = true
-      previewingFilter?.addTarget(previewingView)
-//      previewingMovie.startProcessing()
+      
+      if overlayMovie != nil {
+        let blendFilter = GPUImageScreenBlendFilter.init()
+        previewingMovie.addTarget(previewingFilter)
+        previewingFilter?.addTarget(blendFilter)
+        overlayMovie?.addTarget(blendFilter)
+        blendFilter.addTarget(previewingView)
+        overlayMovie?.playAtActualSpeed = true
+        overlayMovie?.shouldRepeat = true
+        overlayMovie?.startProcessing()
+      
+      } else {
+        previewingMovie.addTarget(previewingFilter)
+        previewingFilter?.addTarget(previewingView)
+      
+      }
+      
       
     }
   }
@@ -107,12 +132,16 @@ class ViewController: UIViewController {
 
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
+    print("didReceiveMemoryWarning")
     // Dispose of any resources that can be recreated.
   }
   
   //MARK: - for Export
   
   @IBAction func beginExport(_ sender: AnyObject) {
+    
+//    self.exportBlend()
+//    return
 
     if renderingFilter == nil {
       return
@@ -123,15 +152,35 @@ class ViewController: UIViewController {
     self.removeRenderdMovie()
     let exportUrl = self.urlOfRenderdMovie()
     print(exportUrl)
-    player.pause()
+    previewingMovie.cancelProcessing()
+    previewingMovie.removeAllTargets()
+    overlayMovie?.cancelProcessing()
+    overlayMovie?.removeAllTargets()
     
     // TODO: detect original assets orientation
     renderingMovieWriter = GPUImageMovieWriter.init(movieURL: exportUrl, size: CGSize(width: videoFrameSize!.height, height: videoFrameSize!.width))
     renderingMovieWriter?.setInputRotation(kGPUImageRotateRight, at: 0)
     
     renderingMovie = GPUImageMovie.init(asset: originalAsset)
-    renderingMovie?.addTarget(renderingFilter)
-    renderingFilter?.addTarget(renderingMovieWriter)
+    renderingMovie?.playAtActualSpeed = true
+
+    
+    if overlayMovie != nil {
+      let blendFilter = GPUImageScreenBlendFilter.init()
+      renderingMovie?.addTarget(renderingFilter)
+      renderingFilter?.addTarget(blendFilter)
+      overlayMovie?.addTarget(blendFilter)
+      blendFilter.addTarget(renderingMovieWriter)
+      overlayMovie?.playAtActualSpeed = true
+      overlayMovie?.shouldRepeat = true
+      overlayMovie?.startProcessing()
+      
+    } else {
+      renderingMovie?.addTarget(renderingFilter)
+      renderingFilter?.addTarget(renderingMovieWriter)
+    }
+
+    
     renderingMovieWriter?.shouldPassthroughAudio = true
     renderingMovie?.audioEncodingTarget = renderingMovieWriter
     renderingMovie?.enableSynchronizedEncoding(using: renderingMovieWriter)
@@ -143,6 +192,8 @@ class ViewController: UIViewController {
       self.renderingMovie?.endProcessing()
       self.renderingMovie?.removeAllTargets()
       self.renderingFilter?.removeAllTargets()
+      self.overlayMovie?.endProcessing()
+      self.overlayMovie?.removeAllTargets()
       self.shareWithAirDrop()
     }
     renderingMovieWriter?.startRecording()
@@ -160,6 +211,44 @@ class ViewController: UIViewController {
     renderingMovie?.cancelProcessing()
     renderingMovie?.removeAllTargets()
     renderingFilter?.removeAllTargets()
+  }
+  
+  func exportBlend() {
+    
+    self.removeRenderdMovie()
+    let exportUrl = self.urlOfRenderdMovie()
+    print(exportUrl)
+    previewingMovie.cancelProcessing()
+
+    testSourceMovie = GPUImageMovie.init(asset: originalAsset)
+    testFlareMovie = GPUImageMovie.init(url: NSURL.fileURL(withPath: Bundle.main.path(forResource: "overlay_flare", ofType: "mp4")!))
+    let testBlendFilter = GPUImageScreenBlendFilter.init()
+    testMovieWriter = GPUImageMovieWriter.init(movieURL: exportUrl, size: CGSize(width: videoFrameSize!.height, height: videoFrameSize!.width))
+
+    testSourceMovie?.playAtActualSpeed = true
+    testFlareMovie?.playAtActualSpeed = true
+    testMovieWriter?.setInputRotation(kGPUImageRotateRight, at: 0)
+
+    testSourceMovie?.addTarget(testBlendFilter)
+    testFlareMovie?.addTarget(testBlendFilter)
+    testBlendFilter.addTarget(testMovieWriter)
+    
+    testMovieWriter?.shouldPassthroughAudio = true
+    testSourceMovie?.audioEncodingTarget = testMovieWriter
+    testSourceMovie?.enableSynchronizedEncoding(using: testMovieWriter)
+
+    testMovieWriter?.completionBlock = {() -> Void in
+      print("completed")
+      self.testFlareMovie?.endProcessing()
+      self.testSourceMovie?.endProcessing()
+      self.testMovieWriter?.finishRecording()
+      self.shareWithAirDrop()
+    }
+
+    testMovieWriter?.startRecording()
+    testSourceMovie?.startProcessing()
+    testFlareMovie?.startProcessing()
+
   }
   
   fileprivate func urlOfRenderdMovie() -> URL {
@@ -271,6 +360,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    if indexPath.row % 2 == 0 {
+      overlayMovie = GPUImageMovie.init(url: NSURL.fileURL(withPath: Bundle.main.path(forResource: "overlay_flare", ofType: "mp4")!))
+    } else {
+      overlayMovie = nil
+    }
     previewingFilter = VideoFilters[indexPath.row].filterClass?.instantiate()
     renderingFilter = VideoFilters[indexPath.row].filterClass?.instantiate()
   }
