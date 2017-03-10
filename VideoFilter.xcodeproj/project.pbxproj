@@ -32,7 +32,6 @@
 		82DB0EF11E6D733D00CF1CB8 /* AntiqueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DB0EF01E6D733D00CF1CB8 /* AntiqueFilter.swift */; };
 		82DB0EF31E6D783C00CF1CB8 /* OriginalFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DB0EF21E6D783C00CF1CB8 /* OriginalFilter.swift */; };
 		82DB0EF51E6D7A6600CF1CB8 /* EchoFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82DB0EF41E6D7A6600CF1CB8 /* EchoFilter.swift */; };
-		82DB0EF71E6D7C5500CF1CB8 /* ballet.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 82DB0EF61E6D7C5500CF1CB8 /* ballet.m4v */; };
 		82E4BD4A1E6EC2B2008AF03E /* FlareFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E4BD491E6EC2B2008AF03E /* FlareFilter.swift */; };
 		82E4BD4C1E6EC375008AF03E /* overlay_flare.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 82E4BD4B1E6EC375008AF03E /* overlay_flare.mp4 */; };
 		82F976D21E643107008163E1 /* DynamicFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82F976D11E643107008163E1 /* DynamicFilter.swift */; };
@@ -92,7 +91,6 @@
 		82DB0EF01E6D733D00CF1CB8 /* AntiqueFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AntiqueFilter.swift; sourceTree = "<group>"; };
 		82DB0EF21E6D783C00CF1CB8 /* OriginalFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OriginalFilter.swift; sourceTree = "<group>"; };
 		82DB0EF41E6D7A6600CF1CB8 /* EchoFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EchoFilter.swift; sourceTree = "<group>"; };
-		82DB0EF61E6D7C5500CF1CB8 /* ballet.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = ballet.m4v; sourceTree = "<group>"; };
 		82E4BD491E6EC2B2008AF03E /* FlareFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlareFilter.swift; sourceTree = "<group>"; };
 		82E4BD4B1E6EC375008AF03E /* overlay_flare.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = overlay_flare.mp4; sourceTree = "<group>"; };
 		82F976D11E643107008163E1 /* DynamicFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicFilter.swift; sourceTree = "<group>"; };
@@ -163,7 +161,6 @@
 				82AB28B31E5EE9740028F528 /* Main.storyboard */,
 				82AB28B61E5EE9740028F528 /* Assets.xcassets */,
 				82AB28DD1E5EF7F20028F528 /* snowboarding_480p.m4v */,
-				82DB0EF61E6D7C5500CF1CB8 /* ballet.m4v */,
 				82AB28B81E5EE9740028F528 /* LaunchScreen.storyboard */,
 				82AB28BB1E5EE9740028F528 /* Info.plist */,
 			);
@@ -359,7 +356,6 @@
 				82DB0EE41E6D720E00CF1CB8 /* filter_antique.acv in Resources */,
 				82DB0EE51E6D720E00CF1CB8 /* filter_aqua.acv in Resources */,
 				82DB0EE61E6D720E00CF1CB8 /* filter_dynamic.acv in Resources */,
-				82DB0EF71E6D7C5500CF1CB8 /* ballet.m4v in Resources */,
 				82DB0EE71E6D720E00CF1CB8 /* filter_elegance.acv in Resources */,
 				82DB0EE81E6D720E00CF1CB8 /* filter_light.acv in Resources */,
 				82DB0EE91E6D720E00CF1CB8 /* filter_toy.acv in Resources */,
