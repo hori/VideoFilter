@@ -25,17 +25,6 @@ class ViewController: UIViewController {
   var originalThumbnail: UIImage?
   var thumbnails: [UIImage?] = []
   
-  var testSourceMovie: GPUImageMovie?
-  var testFlareMovie: GPUImageMovie?
-  var testMovieWriter: GPUImageMovieWriter?
-  
-  var overlayMovie: GPUImageMovie? = nil {
-    willSet{
-      overlayMovie?.cancelProcessing()
-      overlayMovie?.removeAllTargets()
-    }
-  }
-  
   weak var observeExportProgressTimer: Timer?
   
   var renderingMovieWriter: GPUImageMovieWriter?
@@ -51,11 +40,8 @@ class ViewController: UIViewController {
   
   weak var previewingFilter: GPUImageFilterGroup? = nil {
     willSet{
-//      previewingMovie.cancelProcessing()
       previewingMovie.removeAllTargets()
       previewingFilter?.removeAllTargets()
-//      overlayMovie?.cancelProcessing()
-//      overlayMovie?.removeAllTargets()
     }
     didSet{
       previewingView.setInputRotation(kGPUImageRotateRight, at: 0) // TODO: detect original assets orientation
@@ -63,23 +49,6 @@ class ViewController: UIViewController {
 
       previewingMovie.addTarget(previewingFilter)
       previewingFilter?.addTarget(previewingView)
-      
-//      if overlayMovie != nil {
-//        let blendFilter = GPUImageScreenBlendFilter.init()
-//        previewingMovie.addTarget(previewingFilter)
-//        previewingFilter?.addTarget(blendFilter)
-//        overlayMovie?.addTarget(blendFilter)
-//        blendFilter.addTarget(previewingView)
-//        overlayMovie?.playAtActualSpeed = true
-//        overlayMovie?.shouldRepeat = true
-//        overlayMovie?.startProcessing()
-//      
-//      } else {
-//        previewingMovie.addTarget(previewingFilter)
-//        previewingFilter?.addTarget(previewingView)
-//      }
-      
-      
     }
   }
   
@@ -141,9 +110,6 @@ class ViewController: UIViewController {
   
   @IBAction func beginExport(_ sender: AnyObject) {
     
-//    self.exportBlend()
-//    return
-
     if renderingFilter == nil {
       return
     }
@@ -155,8 +121,6 @@ class ViewController: UIViewController {
     print(exportUrl)
     previewingMovie.cancelProcessing()
     previewingMovie.removeAllTargets()
-    overlayMovie?.cancelProcessing()
-    overlayMovie?.removeAllTargets()
     
     // TODO: detect original assets orientation
     renderingMovieWriter = GPUImageMovieWriter.init(movieURL: exportUrl, size: CGSize(width: videoFrameSize!.height, height: videoFrameSize!.width))
@@ -165,21 +129,6 @@ class ViewController: UIViewController {
     renderingMovie = GPUImageMovie.init(asset: originalAsset)
     renderingMovie?.playAtActualSpeed = true
 
-    
-//    if overlayMovie != nil {
-//      let blendFilter = GPUImageScreenBlendFilter.init()
-//      renderingMovie?.addTarget(renderingFilter)
-//      renderingFilter?.addTarget(blendFilter)
-//      overlayMovie?.addTarget(blendFilter)
-//      blendFilter.addTarget(renderingMovieWriter)
-//      overlayMovie?.playAtActualSpeed = true
-//      overlayMovie?.shouldRepeat = true
-//      overlayMovie?.startProcessing()
-//      
-//    } else {
-//      renderingMovie?.addTarget(renderingFilter)
-//      renderingFilter?.addTarget(renderingMovieWriter)
-//    }
     renderingMovie?.addTarget(renderingFilter)
     renderingFilter?.addTarget(renderingMovieWriter)
 
@@ -195,8 +144,6 @@ class ViewController: UIViewController {
       self.renderingMovie?.endProcessing()
       self.renderingMovie?.removeAllTargets()
       self.renderingFilter?.removeAllTargets()
-      self.overlayMovie?.endProcessing()
-      self.overlayMovie?.removeAllTargets()
       self.shareWithAirDrop()
     }
     renderingMovieWriter?.startRecording()
@@ -214,44 +161,6 @@ class ViewController: UIViewController {
     renderingMovie?.cancelProcessing()
     renderingMovie?.removeAllTargets()
     renderingFilter?.removeAllTargets()
-  }
-  
-  func exportBlend() {
-    
-    self.removeRenderdMovie()
-    let exportUrl = self.urlOfRenderdMovie()
-    print(exportUrl)
-    previewingMovie.cancelProcessing()
-
-    testSourceMovie = GPUImageMovie.init(asset: originalAsset)
-    testFlareMovie = GPUImageMovie.init(url: NSURL.fileURL(withPath: Bundle.main.path(forResource: "overlay_flare", ofType: "mp4")!))
-    let testBlendFilter = GPUImageScreenBlendFilter.init()
-    testMovieWriter = GPUImageMovieWriter.init(movieURL: exportUrl, size: CGSize(width: videoFrameSize!.height, height: videoFrameSize!.width))
-
-    testSourceMovie?.playAtActualSpeed = true
-    testFlareMovie?.playAtActualSpeed = true
-    testMovieWriter?.setInputRotation(kGPUImageRotateRight, at: 0)
-
-    testSourceMovie?.addTarget(testBlendFilter)
-    testFlareMovie?.addTarget(testBlendFilter)
-    testBlendFilter.addTarget(testMovieWriter)
-    
-    testMovieWriter?.shouldPassthroughAudio = true
-    testSourceMovie?.audioEncodingTarget = testMovieWriter
-    testSourceMovie?.enableSynchronizedEncoding(using: testMovieWriter)
-
-    testMovieWriter?.completionBlock = {() -> Void in
-      print("completed")
-      self.testFlareMovie?.endProcessing()
-      self.testSourceMovie?.endProcessing()
-      self.testMovieWriter?.finishRecording()
-      self.shareWithAirDrop()
-    }
-
-    testMovieWriter?.startRecording()
-    testSourceMovie?.startProcessing()
-    testFlareMovie?.startProcessing()
-
   }
   
   fileprivate func urlOfRenderdMovie() -> URL {
@@ -273,7 +182,6 @@ class ViewController: UIViewController {
   }
   
   func observeExportProgress(_ timer: Timer) {
-    print("hi")
     print(renderingMovie?.progress)
   }
 
@@ -363,11 +271,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
   }
 
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//    if indexPath.row % 2 == 0 {
-//      overlayMovie = GPUImageMovie.init(url: NSURL.fileURL(withPath: Bundle.main.path(forResource: "overlay_flare", ofType: "mp4")!))
-//    } else {
-//      overlayMovie = nil
-//    }
     previewingFilter = VideoFilters[indexPath.row].filterClass?.instantiate()
     renderingFilter = VideoFilters[indexPath.row].filterClass?.instantiate()
   }

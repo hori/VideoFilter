@@ -25,9 +25,6 @@ class FlareFilter: GPUImageFilterGroup {
   public var lookupImageSource: GPUImagePicture?
   public var flareMovie: GPUImageMovie?
   
-  public var player: AVPlayer?
-  public var playerItem: AVPlayerItem?
-
   public override init(){
     super.init()
     
@@ -49,12 +46,7 @@ class FlareFilter: GPUImageFilterGroup {
 
     let path = Bundle.main.path(forResource: "overlay_flare", ofType: "mp4")
 
-//    player = AVPlayer()
-//    playerItem = AVPlayerItem(url: NSURL.fileURL(withPath: path!))
-//    player?.replaceCurrentItem(with: playerItem)
-
     flareMovie = GPUImageMovie.init(url: NSURL.fileURL(withPath: path!))
-//    flareMovie = GPUImageMovie(playerItem: playerItem)
     flareMovie?.playAtActualSpeed = true
     flareMovie?.shouldRepeat = true
 
@@ -65,24 +57,15 @@ class FlareFilter: GPUImageFilterGroup {
 
     self.addFilter(screenBlendFilter)
     flareMovie?.startProcessing()
-//    player?.play()
     
     self.initialFilters = [lookupFilter]
     self.terminalFilter = screenBlendFilter
-    
-//    NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player?.currentItem, queue: nil, using: { (_) in
-//      DispatchQueue.main.async {
-//        self.player?.seek(to: kCMTimeZero)
-//        self.player?.play()
-//      }
-//    })
 
   }
   
   override func removeAllTargets() {
     flareMovie?.cancelProcessing()
     flareMovie?.removeAllTargets()
-    print("removeAllTargets")
     super.removeAllTargets()
   }
   
