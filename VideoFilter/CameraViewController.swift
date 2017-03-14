@@ -13,7 +13,7 @@ import AssetsLibrary
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
   
   let session = AVCaptureSession()
-  let videoDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+  var videoDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
   let audioDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeAudio)
   let fileOutput = AVCaptureMovieFileOutput()
 
@@ -47,14 +47,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
   
   func setupCaptureSession(){
 
-    let previewLayer = AVCaptureVideoPreviewLayer(session: session)
-    
-    previewLayer?.masksToBounds = true
-    previewLayer?.frame = previewView.bounds
-    previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
-    
-    previewView.layer.addSublayer(previewLayer!)
-    
     do {
       
       for anyformat in (videoDevice?.formats)! {
@@ -83,10 +75,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
       let videoInput = try AVCaptureDeviceInput.init(device: videoDevice)
       let audioInput = try AVCaptureDeviceInput.init(device: audioDevice)
       
-//      session.beginConfiguration()
       session.addInput(videoInput)
       session.addInput(audioInput)
-//      session.commitConfiguration()
 
     } catch {
       print("catch")
@@ -94,9 +84,22 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     session.addOutput(fileOutput)
 
+    // Stabilization
     let connection: AVCaptureConnection? = fileOutput.connection(withMediaType: AVMediaTypeVideo)
     connection!.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.cinematic
 
+    // Preview
+    let previewLayer = AVCaptureVideoPreviewLayer(session: session)
+    previewLayer?.masksToBounds = true
+    previewLayer?.frame = previewView.bounds
+    previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+    previewView.layer.addSublayer(previewLayer!)
+    
+    // Touch AF & AE
+    let gesture = UITapGestureRecognizer(target: self, action: #selector(tapPreviewView(gestureRecognizer:)))
+    previewView.addGestureRecognizer(gesture)
+
+    
     session.startRunning()
 
     print("---")
@@ -105,8 +108,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     print(videoDevice?.activeVideoMaxFrameDuration)
     print("---")
     
-    let gesture = UITapGestureRecognizer(target: self, action: #selector(tapPreviewView(gestureRecognizer:)))
-    previewView.addGestureRecognizer(gesture)
     
   }
 
