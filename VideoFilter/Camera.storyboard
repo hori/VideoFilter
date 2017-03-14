@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="aVc-jN-1Ai">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Camera View Controller-->
+        <scene sceneID="ZdS-I2-BrO">
+            <objects>
+                <viewController id="aVc-jN-1Ai" customClass="CameraViewController" customModule="VideoFilter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rn9-mr-cXn"/>
+                        <viewControllerLayoutGuide type="bottom" id="TIX-Pi-8Lt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oWm-q3-Kg8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OW6-BU-FiZ">
+                                <rect key="frame" x="0.0" y="-2" width="375" height="669"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7VY-un-GZf">
+                                <rect key="frame" x="164" y="577" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="startCapture:" destination="aVc-jN-1Ai" eventType="touchUpInside" id="35h-WZ-78G"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="OW6-BU-FiZ" firstAttribute="top" secondItem="Rn9-mr-cXn" secondAttribute="bottom" constant="-22" id="62g-Ua-K1I"/>
+                            <constraint firstAttribute="trailing" secondItem="OW6-BU-FiZ" secondAttribute="trailing" id="CiM-aA-Ufo"/>
+                            <constraint firstItem="TIX-Pi-8Lt" firstAttribute="top" secondItem="7VY-un-GZf" secondAttribute="bottom" constant="60" id="Khw-Xc-GBO"/>
+                            <constraint firstItem="7VY-un-GZf" firstAttribute="centerX" secondItem="oWm-q3-Kg8" secondAttribute="centerX" id="Kuo-5G-NVk"/>
+                            <constraint firstItem="OW6-BU-FiZ" firstAttribute="leading" secondItem="oWm-q3-Kg8" secondAttribute="leading" id="R8y-fB-48N"/>
+                            <constraint firstItem="TIX-Pi-8Lt" firstAttribute="top" secondItem="OW6-BU-FiZ" secondAttribute="bottom" id="UoD-ge-OMm"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="captureButton" destination="7VY-un-GZf" id="WQS-Lq-q2R"/>
+                        <outlet property="previewView" destination="OW6-BU-FiZ" id="CNI-AO-BYQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="blb-ee-PHT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-303.19999999999999" y="-318.89055472263868"/>
+        </scene>
+    </scenes>
+</document>
