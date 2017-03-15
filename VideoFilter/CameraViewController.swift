@@ -13,7 +13,7 @@ import AssetsLibrary
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
   
   let session = AVCaptureSession()
-  var videoDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+  let videoDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
   let audioDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeAudio)
   let fileOutput = AVCaptureMovieFileOutput()
 
@@ -47,43 +47,44 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
   
   func setupCaptureSession(){
 
+    // Connect device to session
     do {
-      
-      for anyformat in (videoDevice?.formats)! {
-        let format = anyformat as! AVCaptureDeviceFormat
-        let fpsRange = format.videoSupportedFrameRateRanges as! [AVFrameRateRange]
-        let maxFps = fpsRange[0].maxFrameRate
-        print(format.formatDescription)
-        print(maxFps)
-        print(
-          format.isVideoStabilizationModeSupported(AVCaptureVideoStabilizationMode.cinematic),
-          format.isVideoStabilizationModeSupported(AVCaptureVideoStabilizationMode.auto),
-          format.isVideoStabilizationModeSupported(AVCaptureVideoStabilizationMode.standard)
-        )
-        print("---")
-        
-        if maxFps == 60 && format.isVideoStabilizationModeSupported(AVCaptureVideoStabilizationMode.cinematic) {
-          try videoDevice?.lockForConfiguration()
-          videoDevice?.activeFormat = format
-          videoDevice?.activeVideoMinFrameDuration = CMTimeMake(1,60)
-          videoDevice?.activeVideoMaxFrameDuration = CMTimeMake(1,60)
-          videoDevice?.unlockForConfiguration()
-          break
-        }
-      }
-
       let videoInput = try AVCaptureDeviceInput.init(device: videoDevice)
       let audioInput = try AVCaptureDeviceInput.init(device: audioDevice)
-      
       session.addInput(videoInput)
       session.addInput(audioInput)
-
-    } catch {
-      print("catch")
+    }catch{
+      print("can not connect inputs")
     }
     
+    // Connect output
     session.addOutput(fileOutput)
 
+    // Video format
+    var videoFormat: AVCaptureDeviceFormat?
+    searchFormat: for anyformat in (videoDevice?.formats)! {
+      let format = anyformat as! AVCaptureDeviceFormat
+      let fpsRange = format.videoSupportedFrameRateRanges as! [AVFrameRateRange]
+      let maxFps = fpsRange[0].maxFrameRate
+      print(maxFps)
+      if maxFps == 60 && format.isVideoStabilizationModeSupported(AVCaptureVideoStabilizationMode.cinematic) {
+        videoFormat = format
+        break searchFormat
+      }
+    }
+    
+    if videoFormat != nil {
+      do {
+        try videoDevice?.lockForConfiguration()
+        videoDevice?.activeFormat = videoFormat!
+        videoDevice?.activeVideoMinFrameDuration = CMTimeMake(1,60)
+        videoDevice?.activeVideoMaxFrameDuration = CMTimeMake(1,60)
+        videoDevice?.unlockForConfiguration()
+      } catch {
+        print("can not configure video format")
+      }
+    }
+    
     // Stabilization
     let connection: AVCaptureConnection? = fileOutput.connection(withMediaType: AVMediaTypeVideo)
     connection!.preferredVideoStabilizationMode = AVCaptureVideoStabilizationMode.cinematic
@@ -99,16 +100,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     let gesture = UITapGestureRecognizer(target: self, action: #selector(tapPreviewView(gestureRecognizer:)))
     previewView.addGestureRecognizer(gesture)
 
-    
     session.startRunning()
-
-    print("---")
-    print(CMTimeMake(1,60))
-    print(videoDevice?.activeVideoMinFrameDuration)
-    print(videoDevice?.activeVideoMaxFrameDuration)
-    print("---")
-    
-    
   }
 
   func tapPreviewView(gestureRecognizer : UITapGestureRecognizer){
