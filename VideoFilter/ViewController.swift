@@ -18,7 +18,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var filterCollectionView: UICollectionView!
   @IBOutlet weak var processingExportView: UIView!
 
-  var player: AVPlayer! = nil
+  var player = AVPlayer()
   var playerItem: AVPlayerItem! = nil
   var videoFrameSize: CGSize?
   var originalAsset: AVAsset?
@@ -61,10 +61,11 @@ class ViewController: UIViewController {
     super.viewDidLoad()
 
 //    let path = Bundle.main.path(forResource: "ballet", ofType: "m4v")
-    let path = Bundle.main.path(forResource: "snowboarding_480p", ofType: "m4v")
-    player = AVPlayer()
-    let pathUrl = NSURL.fileURL(withPath: path!)
-    
+//    let path = Bundle.main.path(forResource: "snowboarding_480p", ofType: "m4v")
+//    let pathUrl = NSURL.fileURL(withPath: path!)
+
+    let pathUrl = self.urlOfResizedMovie()
+
     originalAsset = AVAsset(url: pathUrl)
     let videoTrack = originalAsset?.tracks(withMediaType: AVMediaTypeVideo).first
     videoFrameSize = videoTrack?.naturalSize
@@ -78,6 +79,7 @@ class ViewController: UIViewController {
     }
       
     playerItem = AVPlayerItem(url: pathUrl)
+    print(playerItem)
     player.replaceCurrentItem(with: playerItem)
     
     previewingMovie = GPUImageMovie(playerItem: playerItem)
@@ -88,14 +90,13 @@ class ViewController: UIViewController {
     previewingFilter = VideoFilters[0].filterClass?.instantiate()
     previewingMovie.startProcessing()
 
-    
     player.play()
 
     // loop video
     NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player.currentItem, queue: nil, using: { (_) in
       DispatchQueue.main.async {
-        self.player?.seek(to: kCMTimeZero)
-        self.player?.play()
+        self.player.seek(to: kCMTimeZero)
+        self.player.play()
       }
     })
   }
@@ -242,6 +243,22 @@ class ViewController: UIViewController {
     ]
     self.present(activityVC, animated: true, completion: nil)
   }
+
+  fileprivate func urlOfRecordMovie() -> URL {
+    let manager = FileManager.default
+    let fileName = "record.mov"
+    let dir: URL! = manager.urls(for: .documentDirectory, in: .userDomainMask).last
+    let filePath = dir.appendingPathComponent(fileName)
+    return filePath.absoluteURL
+  }
+  fileprivate func urlOfResizedMovie() -> URL {
+    let manager = FileManager.default
+    let fileName = "resized.mov"
+    let dir: URL! = manager.urls(for: .documentDirectory, in: .userDomainMask).last
+    let filePath = dir.appendingPathComponent(fileName)
+    return filePath.absoluteURL
+  }
+
 }
 
 

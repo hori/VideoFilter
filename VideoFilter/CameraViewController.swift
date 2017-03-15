@@ -137,6 +137,20 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
   }
   
+  @IBAction func toggleLight(_ sender:AnyObject) {
+    let isActive = videoDevice!.isTorchActive
+    do{
+      try videoDevice?.lockForConfiguration()
+      videoDevice?.torchMode = isActive ? .off : .on
+      videoDevice?.unlockForConfiguration()
+    }catch{
+    }
+  }
+  
+  @IBAction func backFromMainView(segue:UIStoryboardSegue){
+    print("hello")
+  }
+  
   func startRecording() {
     let url = self.urlOfRecordMovie()
     fileOutput.startRecording(toOutputFileURL: url, recordingDelegate: self)
@@ -150,14 +164,37 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
   func capture(_ captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAt outputFileURL: URL!, fromConnections connections: [Any]!, error: Error!){
     print("finish capture")
-    self.shareWithAirDrop()
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+      self.convert720p()
+    }
+//    performSegue(withIdentifier: "toMainViewSegue", sender: self)
+//    self.shareWithAirDrop()
   }
   
   func capture(_ captureOutput: AVCaptureFileOutput!, didStartRecordingToOutputFileAt fileURL: URL!, fromConnections connections: [Any]!) {
     print("start capture")
   }
   
-  
+  func convert720p(){
+
+    self.removeResizedMovie()
+    
+    // input file
+    let asset = AVAsset(url: self.urlOfRecordMovie())
+    print(asset)
+
+    // export
+    let exporter = AVAssetExportSession(asset: asset, presetName: AVAssetExportPreset1280x720)
+    exporter?.outputURL = self.urlOfResizedMovie()
+    exporter?.outputFileType = AVFileTypeQuickTimeMovie
+    
+    exporter?.exportAsynchronously { [unowned self] in
+      print("finish exporting")
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        self.performSegue(withIdentifier: "toMainViewSegue", sender: self)
+      }
+    }
+  }
 }
 
 extension CameraViewController {
@@ -180,9 +217,28 @@ extension CameraViewController {
     }
   }
 
+  fileprivate func urlOfResizedMovie() -> URL {
+    let manager = FileManager.default
+    let fileName = "resized.mov"
+    let dir: URL! = manager.urls(for: .documentDirectory, in: .userDomainMask).last
+    let filePath = dir.appendingPathComponent(fileName)
+    return filePath.absoluteURL
+  }
+  
+  fileprivate func removeResizedMovie() {
+    let manager = FileManager.default
+    let fileUrl = self.urlOfResizedMovie()
+    if manager.fileExists(atPath: fileUrl.path)  {
+      do {
+        try manager.removeItem(atPath: fileUrl.path)
+      } catch {}
+    }
+  }
+  
   //MARK: - for Debugging
   fileprivate func shareWithAirDrop() {
-    let fileUrl = self.urlOfRecordMovie()
+//    let fileUrl = self.urlOfRecordMovie()
+    let fileUrl = self.urlOfResizedMovie()
     let activityVC = UIActivityViewController(activityItems: [fileUrl], applicationActivities: nil)
     activityVC.excludedActivityTypes = [
       .postToFacebook,
