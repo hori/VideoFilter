@@ -94,10 +94,18 @@
                                             <action selector="cancelExport:" destination="BYZ-38-t0r" eventType="touchUpInside" id="U6g-1V-bqT"/>
                                         </connections>
                                     </button>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cg1-gg-Hdt">
+                                        <rect key="frame" x="87" y="300" width="200" height="2"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="Kky-i5-LDY"/>
+                                        </constraints>
+                                    </progressView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Btl-sk-u2x" secondAttribute="bottom" constant="60" id="120-4K-bjr"/>
+                                    <constraint firstItem="cg1-gg-Hdt" firstAttribute="centerX" secondItem="ukD-zm-o5Q" secondAttribute="centerX" id="ClT-LF-i50"/>
+                                    <constraint firstItem="cg1-gg-Hdt" firstAttribute="top" secondItem="ukD-zm-o5Q" secondAttribute="top" constant="300" id="Uvd-gS-d0I"/>
                                     <constraint firstItem="Btl-sk-u2x" firstAttribute="centerX" secondItem="ukD-zm-o5Q" secondAttribute="centerX" id="eN3-UM-cER"/>
                                 </constraints>
                             </view>
@@ -121,6 +129,7 @@
                     </view>
                     <connections>
                         <outlet property="exportButton" destination="dvo-hU-TIR" id="e1G-sT-SjX"/>
+                        <outlet property="exportProgressView" destination="cg1-gg-Hdt" id="HD6-qh-yXP"/>
                         <outlet property="filterCollectionView" destination="1GD-ud-9VR" id="lLp-Vc-z0J"/>
                         <outlet property="previewView" destination="Ezg-S3-mmR" id="EmL-dz-KNZ"/>
                         <outlet property="processingExportView" destination="ukD-zm-o5Q" id="R8B-F6-xfo"/>

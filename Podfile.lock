@@ -2,20 +2,20 @@ PODS:
   - GPUImage (0.1.7)
 
 DEPENDENCIES:
-  - GPUImage (from `https://github.com/hori/GPUImage.git`)
+  - GPUImage (from `git@github.com:hori/GPUImage.git`)
 
 EXTERNAL SOURCES:
   GPUImage:
-    :git: https://github.com/hori/GPUImage.git
+    :git: git@github.com:hori/GPUImage.git
 
 CHECKOUT OPTIONS:
   GPUImage:
     :commit: 4a7179c9cb8dd7238d4c962cc9595dcd06c72d32
-    :git: https://github.com/hori/GPUImage.git
+    :git: git@github.com:hori/GPUImage.git
 
 SPEC CHECKSUMS:
   GPUImage: bd7e201b9aa91e85f401ed7a6d9867a07a404693
 
-PODFILE CHECKSUM: 3a734ff4435cbc69a49e9600af2057db557a51ca
+PODFILE CHECKSUM: b7e69806b36b59695bb31fefdb7632a364ddf2c5
 
 COCOAPODS: 1.1.1

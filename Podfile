@@ -7,7 +7,7 @@ target 'VideoFilter' do
 
   # Pods for VideoFilter
 
-  pod 'GPUImage', :git => 'https://github.com/hori/GPUImage.git'
+  pod 'GPUImage', :git => 'git@github.com:hori/GPUImage.git'
 
   target 'VideoFilterTests' do
     inherit! :search_paths

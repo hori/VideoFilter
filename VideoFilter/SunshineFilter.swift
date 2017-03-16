@@ -33,7 +33,8 @@ class SunshineFilter: GPUImageFilterGroup {
     blendMovie?.playAtActualSpeed = true
     blendMovie?.shouldRepeat = true
     
-    let blendFilter = GPUImageOverlayBlendFilter.init()
+//    let blendFilter = GPUImageOverlayBlendFilter.init()
+    let blendFilter = GPUImageScreenBlendFilter.init()
     toneCorveFilter.addTarget(blendFilter)
     blendMovie?.addTarget(blendFilter)
     

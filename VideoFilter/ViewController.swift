@@ -17,6 +17,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var exportButton: UIButton!
   @IBOutlet weak var filterCollectionView: UICollectionView!
   @IBOutlet weak var processingExportView: UIView!
+  @IBOutlet weak var exportProgressView: UIProgressView!
 
   var player = AVPlayer()
   var playerItem: AVPlayerItem! = nil
@@ -44,8 +45,8 @@ class ViewController: UIViewController {
       previewingFilter?.removeAllTargets()
     }
     didSet{
-      previewingView.setInputRotation(kGPUImageRotateRight, at: 0) // TODO: detect original assets orientation
-      previewingView.fillMode = kGPUImageFillModePreserveAspectRatioAndFill
+      previewingView.setInputRotation(GPUImageRotationMode.rotateRight, at: 0)
+      previewingView.fillMode = GPUImageFillModeType.preserveAspectRatioAndFill
 
       previewingMovie.addTarget(previewingFilter)
       previewingFilter?.addTarget(previewingView)
@@ -114,26 +115,30 @@ class ViewController: UIViewController {
     if renderingFilter == nil {
       return
     }
+    previewingMovie.cancelProcessing()
+    previewingMovie.removeAllTargets()
+    player.pause()
 
     processingExportView.isHidden = false
     
     self.removeRenderdMovie()
     let exportUrl = self.urlOfRenderdMovie()
     print(exportUrl)
-    previewingMovie.cancelProcessing()
-    previewingMovie.removeAllTargets()
-    
+
     // TODO: detect original assets orientation
     renderingMovieWriter = GPUImageMovieWriter.init(movieURL: exportUrl, size: CGSize(width: videoFrameSize!.height, height: videoFrameSize!.width))
-    renderingMovieWriter?.setInputRotation(kGPUImageRotateRight, at: 0)
+    renderingMovieWriter?.setInputRotation(GPUImageRotationMode.rotateRight, at: 0)
     
     renderingMovie = GPUImageMovie.init(asset: originalAsset)
+
     renderingMovie?.playAtActualSpeed = true
 
     renderingMovie?.addTarget(renderingFilter)
+    
     renderingFilter?.addTarget(renderingMovieWriter)
     
     renderingMovieWriter?.shouldPassthroughAudio = true
+    
     renderingMovie?.audioEncodingTarget = renderingMovieWriter
     renderingMovie?.enableSynchronizedEncoding(using: renderingMovieWriter)
     
@@ -183,6 +188,7 @@ class ViewController: UIViewController {
   
   func observeExportProgress(_ timer: Timer) {
     print(renderingMovie?.progress)
+    exportProgressView.progress = (renderingMovie?.progress)!
   }
 
   fileprivate func thumbnail() -> UIImage? {
