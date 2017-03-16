@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'EA0DD8ED489933744D70DD4A9719ED01'
+               BlueprintIdentifier = 'CB468BE0ED6FFE5A1112800BFFB5728C'
                BlueprintName = 'GPUImage'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'GPUImage.framework'>
