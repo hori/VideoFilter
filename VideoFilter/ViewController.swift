@@ -132,7 +132,6 @@ class ViewController: UIViewController {
 
     renderingMovie?.addTarget(renderingFilter)
     renderingFilter?.addTarget(renderingMovieWriter)
-
     
     renderingMovieWriter?.shouldPassthroughAudio = true
     renderingMovie?.audioEncodingTarget = renderingMovieWriter

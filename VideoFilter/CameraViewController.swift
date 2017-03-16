@@ -72,6 +72,18 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         break searchFormat
       }
     }
+    if videoFormat == nil {
+      searchFormat2: for anyformat in (videoDevice?.formats)! {
+        let format = anyformat as! AVCaptureDeviceFormat
+        let fpsRange = format.videoSupportedFrameRateRanges as! [AVFrameRateRange]
+        let maxFps = fpsRange[0].maxFrameRate
+        print(maxFps)
+        if maxFps == 60 {
+          videoFormat = format
+          break searchFormat2
+        }
+      }
+    }
     
     if videoFormat != nil {
       do {
@@ -191,6 +203,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     exporter?.exportAsynchronously { [unowned self] in
       print("finish exporting")
       DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//        self.shareWithAirDrop()
         self.performSegue(withIdentifier: "toMainViewSegue", sender: self)
       }
     }
